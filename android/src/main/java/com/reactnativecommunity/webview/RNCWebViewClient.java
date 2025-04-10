@@ -89,6 +89,7 @@ public class RNCWebViewClient extends WebViewClient {
     public void onPageStarted(WebView webView, String url, Bitmap favicon) {
       super.onPageStarted(webView, url, favicon);
       mLastLoadFailed = false;
+      Log.w(TAG, "i lovemorocco ");
 
       RNCWebView reactWebView = (RNCWebView) webView;
       reactWebView.callInjectedJavaScriptBeforeContentLoaded();
