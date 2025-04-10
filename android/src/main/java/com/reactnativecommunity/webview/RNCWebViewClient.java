@@ -182,7 +182,7 @@ public class RNCWebViewClient extends WebViewClient {
         }
 
         int code = error.getPrimaryError();
-        String description = "";
+        String description = "coco";
         String descriptionPrefix = "SSL error: ";
 
         // https://developer.android.com/reference/android/net/http/SslError.html
