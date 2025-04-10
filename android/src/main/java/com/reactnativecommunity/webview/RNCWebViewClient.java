@@ -96,6 +96,34 @@ public class RNCWebViewClient extends WebViewClient {
       reactWebView.callInjectedJavaScriptBeforeContentLoaded();
     }
 
+
+
+
+    @Override
+    public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+    try {
+        Map<String, String> newHeaders = new HashMap<>(request.getRequestHeaders());
+        newHeaders.put("X-Forwarded-For", "123.123.123.123");
+
+        HttpURLConnection connection = (HttpURLConnection) new URL(request.getUrl().toString()).openConnection();
+        for (Map.Entry<String, String> header : newHeaders.entrySet()) {
+            connection.setRequestProperty(header.getKey(), header.getValue());
+        }
+
+        InputStream inputStream = connection.getInputStream();
+        String contentType = connection.getContentType();
+        String encoding = connection.getContentEncoding() != null ? connection.getContentEncoding() : "utf-8";
+
+        return new WebResourceResponse(
+            contentType,
+            encoding,
+            inputStream
+        );
+    } catch (Exception e) {
+        return super.shouldInterceptRequest(view, request);
+    }
+   }
+
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         final RNCWebView rncWebView = (RNCWebView) view;
