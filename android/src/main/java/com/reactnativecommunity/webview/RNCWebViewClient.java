@@ -108,17 +108,25 @@ public class RNCWebViewClient extends WebViewClient {
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
     try {
-        Map<String, String> newHeaders = new HashMap<>(request.getRequestHeaders());
-        newHeaders.put("X-Forwarded-For", "123.123.123.123");
+        URL url = new URL(request.getUrl().toString());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-        HttpURLConnection connection = (HttpURLConnection) new URL(request.getUrl().toString()).openConnection();
-        for (Map.Entry<String, String> header : newHeaders.entrySet()) {
-            connection.setRequestProperty(header.getKey(), header.getValue());
+        // Add X-Forwarded-For (though most servers won't trust this)
+        connection.setRequestProperty("X-Forwarded-For", "123.123.123.123");
+
+        // Preserve original headers
+        Map<String, String> originalHeaders = request.getRequestHeaders();
+        for (Map.Entry<String, String> entry : originalHeaders.entrySet()) {
+            if (!entry.getKey().equalsIgnoreCase("X-Forwarded-For")) {
+                connection.setRequestProperty(entry.getKey(), entry.getValue());
+            }
         }
 
-        InputStream inputStream = connection.getInputStream();
+        connection.connect();
+
         String contentType = connection.getContentType();
         String encoding = connection.getContentEncoding() != null ? connection.getContentEncoding() : "utf-8";
+        InputStream inputStream = connection.getInputStream();
 
         return new WebResourceResponse(
             contentType,
@@ -126,9 +134,10 @@ public class RNCWebViewClient extends WebViewClient {
             inputStream
         );
     } catch (Exception e) {
+        // Fallback to default loading if error occurs
         return super.shouldInterceptRequest(view, request);
     }
-   }
+    }
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
