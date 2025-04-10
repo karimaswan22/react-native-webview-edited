@@ -1,5 +1,5 @@
 {
-  "name": "react-native-webview",
+  "name": "react-native-webview-edited",
   "description": "React Native WebView component for iOS, Android, macOS, and Windows",
   "main": "index.js",
   "main-internal": "src/index.ts",
@@ -11,7 +11,7 @@
   ],
   "license": "MIT",
   "version": "13.13.5",
-  "homepage": "https://github.com/react-native-webview/react-native-webview#readme",
+  "homepage": "https://github.com/react-native-webview-edited/",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -72,7 +72,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/react-native-webview/react-native-webview.git"
+    "url": "https://github.com/karimaswan22/react-native-webview-edited.git"
   },
   "files": [
     "android/src",
