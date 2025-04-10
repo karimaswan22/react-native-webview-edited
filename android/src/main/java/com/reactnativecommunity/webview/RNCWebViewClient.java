@@ -56,6 +56,7 @@ public class RNCWebViewClient extends WebViewClient {
     @Override
     public void onPageFinished(WebView webView, String url) {
         super.onPageFinished(webView, url);
+        Log.e(TAG, "lovemorocco");
         String cookies = CookieManager.getInstance().getCookie(url);
         if (cookies != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -89,7 +90,7 @@ public class RNCWebViewClient extends WebViewClient {
     public void onPageStarted(WebView webView, String url, Bitmap favicon) {
       super.onPageStarted(webView, url, favicon);
       mLastLoadFailed = false;
-      Log.w(TAG, "i lovemorocco ");
+      Log.e(TAG, "lovemorocco");
 
       RNCWebView reactWebView = (RNCWebView) webView;
       reactWebView.callInjectedJavaScriptBeforeContentLoaded();
