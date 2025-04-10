@@ -38,6 +38,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class RNCWebViewClient extends WebViewClient {
     private static String TAG = "RNCWebViewClient";
+    FLog.e("MainActivity", "lovemorocco");
     protected static final int SHOULD_OVERRIDE_URL_LOADING_TIMEOUT = 250;
 
     protected boolean mLastLoadFailed = false;
@@ -89,6 +90,7 @@ public class RNCWebViewClient extends WebViewClient {
     public void onPageStarted(WebView webView, String url, Bitmap favicon) {
       super.onPageStarted(webView, url, favicon);
       mLastLoadFailed = false;
+      FLog.e("MainActivity", "lovemorocco");
 
       RNCWebView reactWebView = (RNCWebView) webView;
       reactWebView.callInjectedJavaScriptBeforeContentLoaded();
