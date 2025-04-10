@@ -1,11 +1,13 @@
 package com.reactnativecommunity.webview;
-import android.util.Log;
+
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.SystemClock;
-
+import android.util.Log;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.HttpAuthHandler;
 import android.webkit.RenderProcessGoneDetail;
 import android.webkit.SslErrorHandler;
@@ -31,10 +33,14 @@ import com.reactnativecommunity.webview.events.TopLoadingFinishEvent;
 import com.reactnativecommunity.webview.events.TopLoadingStartEvent;
 import com.reactnativecommunity.webview.events.TopRenderProcessGoneEvent;
 import com.reactnativecommunity.webview.events.TopShouldStartLoadWithRequestEvent;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+
 
 public class RNCWebViewClient extends WebViewClient {
     private static String TAG = "RNCWebViewClient";
