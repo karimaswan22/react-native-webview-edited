@@ -1,11 +1,11 @@
 package com.reactnativecommunity.webview;
-
+import android.util.Log;
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.SystemClock;
-import android.util.Log;
+
 import android.webkit.HttpAuthHandler;
 import android.webkit.RenderProcessGoneDetail;
 import android.webkit.SslErrorHandler;
@@ -38,7 +38,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class RNCWebViewClient extends WebViewClient {
     private static String TAG = "RNCWebViewClient";
-    Log.i(TAG, "lovemorocco");
     protected static final int SHOULD_OVERRIDE_URL_LOADING_TIMEOUT = 250;
 
     protected boolean mLastLoadFailed = false;
@@ -56,7 +55,9 @@ public class RNCWebViewClient extends WebViewClient {
 
     @Override
     public void onPageFinished(WebView webView, String url) {
+        
         super.onPageFinished(webView, url);
+        Log.i(TAG, "lovemorocco");
         String cookies = CookieManager.getInstance().getCookie(url);
         if (cookies != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -91,7 +92,6 @@ public class RNCWebViewClient extends WebViewClient {
       super.onPageStarted(webView, url, favicon);
       mLastLoadFailed = false;
       Log.i(TAG, "lovemorocco");
-
       RNCWebView reactWebView = (RNCWebView) webView;
       reactWebView.callInjectedJavaScriptBeforeContentLoaded();
     }
