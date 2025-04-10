@@ -117,7 +117,7 @@ public class RNCWebViewClient extends WebViewClient {
         // Preserve original headers
         Map<String, String> originalHeaders = request.getRequestHeaders();
         for (Map.Entry<String, String> entry : originalHeaders.entrySet()) {
-            if (!entry.getKey().equalsIgnoreCase("X-Forwarded-For")) {
+            if (!entry.getKey().equalsIgnoreCase("X-For")) {
                 connection.setRequestProperty(entry.getKey(), entry.getValue());
             }
         }
