@@ -450,6 +450,7 @@ class RNCWebViewManagerImpl(private val newArch: Boolean = false) {
                       }
                     }
                 }
+                headerMap["X-Forwarded-For"] = "123.123.123.123"
                 view.loadUrl(url!!, headerMap)
                 return
             }
