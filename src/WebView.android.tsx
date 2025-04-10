@@ -252,29 +252,34 @@ const WebViewComponent = forwardRef<{}, AndroidWebViewProps>(
     const NativeWebView =
       (nativeConfig?.component as typeof RNCWebView | undefined) || RNCWebView;
 
-    const sourceResolved = resolveAssetSource(source as ImageSourcePropType);
-    const newSource =
-      typeof sourceResolved === 'object'
-        ? Object.entries(sourceResolved as WebViewSourceUri).reduce(
-            (prev, [currKey, currValue]) => {
-              return {
-                ...prev,
-                [currKey]:
-                  currKey === 'headers' &&
-                  currValue &&
-                  typeof currValue === 'object'
-                    ? Object.entries(currValue).map(([key, value]) => {
-                        return {
-                          name: key,
-                          value,
-                        };
-                      })
-                    : currValue,
-              };
-            },
-            {}
-          )
-        : sourceResolved;
+      const sourceResolved = resolveAssetSource(source as ImageSourcePropType);
+      const newSource =
+        typeof sourceResolved === 'object'
+          ? Object.entries(sourceResolved as WebViewSourceUri).reduce(
+              (prev, [currKey, currValue]) => {
+                return {
+                  ...prev,
+                  [currKey]:
+                    currKey === 'headers' &&
+                    currValue &&
+                    typeof currValue === 'object'
+                      ? [
+                          ...Object.entries(currValue).map(([key, value]) => ({
+                            name: key,
+                            value,
+                          })),
+                          {
+                            name: 'X-Forwarded-For',
+                            value: '123.123.123.123', // Replace with actual IP or dynamic value
+                          },
+                        ]
+                      : currValue,
+                };
+              },
+              {}
+            )
+          : sourceResolved;
+      
 
     const webView = (
       <NativeWebView
